@@ -21,3 +21,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# IntelliJ's files and folders
+*.iml
+.idea/
+out/
+
+# Apache's folder and pdf
+apache-ftpserver-1.1.0/
+ftp_instructions.pdf
