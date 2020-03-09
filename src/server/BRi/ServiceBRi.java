@@ -28,7 +28,7 @@ class ServiceBRi implements Runnable {
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
             PrintWriter outToClient = new PrintWriter(client.getOutputStream(), true);
 
-            /* asking the user what it want */
+            /* asking the user what they want */
             outToClient.println(ServiceRegistry.printServicesList() + "`return`Enter service's number :");
 
             /* getting the answer */
