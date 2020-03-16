@@ -27,11 +27,11 @@ src
 
 If I have to describe the overall working process, it's very simple.
 We choose to use a `Singleton` to make the database shared between all the threads.
-And because of those nasty threads, we had to stick `synchronized` onto the database declaration method just in case two threads start simultaneously.
+And because of those nasty threads, we had to stick `synchronized` onto the [database declaration method](src/server/user/UserDB.java) just in case two threads start simultaneously.
 ```java
 public synchronized static UserDB getDatabase()
 ```
-We also ditch the Vector for a Collection, for obvious reason that are stated directly in the code.
+We also ditch the Vector for a Collection, for obvious reason that are stated directly in the [code](src/server/BRi/ServiceRegistry.java).
 
 The rest is pretty straight forward, two threads listen for connections, one for the Amateurs and the other for the Programmers.
 When a connexion is made, the work is handled by a self-destructive thread.
@@ -52,7 +52,7 @@ A Programmer can add/remove Services and change its FTP url.
 ## What does't work
 
 * Modifying Services.
-* Everything that was optional, like the messaging shenanigans. It was optional so... ¯\_(ツ)_/¯
+* Everything that was optional, like the messaging shenanigans. It was optional so... ¯\\\_(ツ)\_/¯
 * XML processing, not enough time to do it...
 
 # Authors
