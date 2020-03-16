@@ -52,7 +52,7 @@ A Programmer can add/remove Services and change its FTP url.
 ## What does't work
 
 * Modifying Services.
-* Everything that was optional, like the messaging shenanigans. It was optional so... ¯\\\_(°w°)\_/¯
+* Everything that was optional, like the messaging shenanigans. It was optional so... ¯\\\_(ツ)\_/¯
 * XML processing, not enough time to do it...
 
 # Authors
