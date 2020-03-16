@@ -19,8 +19,8 @@ public class Server {
 
         URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{new URL("ftp://localhost:2121/")});
 
-        new Thread(new ServerBRi(PORT_AMATEUR)).start();
-        new Thread(new ServerBRi(PORT_PROGRAMMER)).start();
+        new Thread(new ServerBRi(PORT_AMATEUR, false)).start();
+        new Thread(new ServerBRi(PORT_PROGRAMMER, true)).start();
 
         System.out.println("server started");
 

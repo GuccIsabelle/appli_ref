@@ -5,7 +5,7 @@ import java.net.*;
 import java.lang.reflect.InvocationTargetException;
 
 class ServiceBRi implements Runnable {
-    private Socket client;
+    private Socket socket;
 
     /**
      * ~ CONSTRUCTOR ~
@@ -13,20 +13,19 @@ class ServiceBRi implements Runnable {
      * @param socket The socket connecting to the client app.
      */
     ServiceBRi(Socket socket) {
-        client = socket;
+        this.socket = socket;
     }
 
     /**
      * ~ RUN FUNCTION ~
-     *
      * Asks the service, launch it and close the connexion.
      */
     public void run() {
         /* trying to launch all that crap */
         try {
             /* resources */
-            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            PrintWriter outToClient = new PrintWriter(client.getOutputStream(), true);
+            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter outToClient = new PrintWriter(socket.getOutputStream(), true);
 
             /* asking the user what they want */
             outToClient.println(ServiceRegistry.printServicesList() + "`return`Enter service's number :");
@@ -35,7 +34,7 @@ class ServiceBRi implements Runnable {
             int choice = Integer.parseInt(inFromClient.readLine());
 
             /* launching the chosen service */
-            ((iService) ServiceRegistry.getServiceFromIndex(choice).getConstructor(Socket.class).newInstance(client)).run();
+            ((iService) ServiceRegistry.getServiceFromIndex(choice).getConstructor(Socket.class).newInstance(socket)).run();
 
         } catch (IOException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             System.out.println(e.getMessage());
@@ -43,19 +42,22 @@ class ServiceBRi implements Runnable {
 
         /* and then trying to close it, talk about efficiency... */
         try {
-            client.close();
+            socket.close();
         } catch (IOException e) {
             System.out.println("error while closing, exception be like:\n" + e);
         }
     }
 
-    // todo : test if shit even do something :thinking:
+    /*
+    As for ServerBRi, i'm also removing the finalize method bc of trust issues.
+
+    See https://howtodoinjava.com/java/basics/why-not-to-use-finalize-method-in-java/
+
     protected void finalize() throws Throwable {
-        client.close();
+        socket.close();
     }
+    */
 
-
-    // todo : same as the above
     public void start() {
         (new Thread(this)).start();
     }
