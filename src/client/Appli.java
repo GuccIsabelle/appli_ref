@@ -33,7 +33,7 @@ public class Appli {
             System.out.println(String.format("Connected to %s:%d", socket.getInetAddress(), socket.getPort()));
 
             /* 1. getting and printing the list of Services */
-            System.out.println(inFromServer.readLine().replaceAll("`return`", "\n"));
+            System.out.println(inFromServer.readLine());
 
             /* 2. sending to server index of the wanted Service */
             outToServer.println(inFromUser.readLine());

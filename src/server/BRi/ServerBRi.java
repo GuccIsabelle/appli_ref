@@ -39,14 +39,11 @@ public class ServerBRi implements Runnable {
         }
     }
 
-    // restituer les ressources --> finalize
-
     /**
      * Return resources -> finalize
      *
-     * @throws Throwable Garbage. (ha ha, get it? because it's thrown away... like garbage... kill me plz...)
      */
-    protected void finalize() throws Throwable {
+    protected void finalize() {
         try {
             this.listen_socket.close();
         } catch (IOException ignored) {

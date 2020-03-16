@@ -6,6 +6,7 @@ public abstract class User {
     private String firstName;
     private String lastName;
     private String address;
+    private boolean connected;
 
     /* auto generated */
     public User(String login, String password, String firstName, String lastName, String address) {
@@ -14,6 +15,7 @@ public abstract class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.connected = false;
     }
 
     /* auto generated */
@@ -64,5 +66,15 @@ public abstract class User {
     /* auto generated */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /* auto generated */
+    public boolean isConnected() {
+        return connected;
+    }
+
+    /* auto generated */
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }
