@@ -47,10 +47,12 @@ public class ServerBRi implements Runnable {
     }
 
     /*
-    I'm removing dis shit bc finalize method are not trustworthy.
-    Furthermore, they even are considerate deprecated in Java 9 and upper.
-
-    See https://howtodoinjava.com/java/basics/why-not-to-use-finalize-method-in-java/
+    ╭───────────────────────────────────────────────────────────────────────────────────╮
+    │ I'm removing dis shit bc finalize method are not trustworthy.                     │
+    │ Furthermore, they even are considerate deprecated in Java 9 and upper.            │
+    │                                                                                   │
+    │ See https://howtodoinjava.com/java/basics/why-not-to-use-finalize-method-in-java/ │
+    ╰───────────────────────────────────────────────────────────────────────────────────╯
 
     protected void finalize() {
         try {

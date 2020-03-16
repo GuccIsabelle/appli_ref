@@ -30,28 +30,22 @@ public class Appli {
             /* LOGIN */
             System.out.println("Please, enter your credentials:");
             String login = inFromUser.readLine();
-            String password = inFromUser.readLine();
             outToServer.println(login);
-            if (!dataFromServer.readBoolean()) exit("This User is either:\n* already connected\n* not in our database");
+            if (!dataFromServer.readBoolean())
+                exit("This User is either:" +
+                        "\n* already connected" +
+                        "\n* not in our database" +
+                        "\n* not a programmer");
+            String password = inFromUser.readLine();
             outToServer.println(password);
             if (!dataFromServer.readBoolean()) exit("Incorrect password.");
 
             /* CHOOSING AND PROCESSING */
-            switch (inFromUser.readLine()) {
-                case "add":
-                    System.out.println("Please, provide Service's name:");
-                    if (!addService(inFromUser.readLine())) exit("Service doesn't exist in your FTP server.");
-                    break;
-                case "update":
-                    if (!updateService(inFromUser.readLine()))
-                        exit("Service doesn't exist, please check the name again.");
-                    break;
-                case "ftp":
-                    if (!modifyFTP(inFromUser.readLine())) exit("Error append while modifying your FTP server.");
-                    break;
-                default:
-                    System.out.println("Sorry I didn't get that.");
-            }
+            System.out.println(inFromServer.readLine().replaceAll("`return`", "\n")); // print list
+            outToServer.println(inFromUser.readLine());  // send choice
+            System.out.println(inFromServer.readLine()); // print instructions
+            outToServer.println(inFromUser.readLine());  // send whatever this is
+            System.out.println(inFromServer.readLine());
 
             // TODO: add loop and quit option
 
@@ -61,17 +55,7 @@ public class Appli {
         }
     }
 
-    private static boolean addService(String serviceName) {
-    }
-
-    private static boolean updateService(String serviceName) {
-
-    }
-
-    private static boolean modifyFTP(String FTP) {
-
-    }
-
+    // TODO: replace this with exception
     private static void exit(String reason) throws IOException {
         System.out.println(reason);
         System.exit(0);

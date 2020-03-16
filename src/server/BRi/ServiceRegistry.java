@@ -30,15 +30,54 @@ public class ServiceRegistry {
     }
 
     /**
+     * Checks if the Class is up to BLTi standards.
+     * If yes, adds it to the list.
+     *
+     * @param serviceToAdd Why bother ?
+     * @return The stat of the adding.
+     * @throws addServiceException The criterion the class does not meet.
+     */
+    public static boolean addService(Class<?> serviceToAdd) throws addServiceException {
+        isOK(serviceToAdd);
+        return services.add(serviceToAdd);
+    }
+
+    /**
+     * Again, checks if the Class is up to BLTi standards.
+     * Remove the old one and then add the new one.
+     * (we pretty much a sure this doesn't work at all...)
+     *
+     * @param serviceToUpdate You don't want a drawing with it ?
+     * @return The stat of the adding.
+     * @throws addServiceException The criterion the class does not meet.
+     */
+    public static boolean updateService(Class<?> serviceToUpdate) throws addServiceException {
+        isOK(serviceToUpdate);
+        /* kill me if this works */
+        services.remove(serviceToUpdate);
+        return services.add(serviceToUpdate);
+    }
+
+    /**
+     * Do I really need to explain this ?
+     *
+     * @param serviceToUpdate duh
+     * @return The stat of the remove.
+     */
+    public static boolean removeService(Class<?> serviceToUpdate) {
+        return services.remove(serviceToUpdate);
+    }
+
+    /**
      * Goes through all those nasty if statements
      * to check if the new Service is up to BLTi standards.
      *
-     * @param serviceToAdd The service we want to add.
+     * @param service The service we have to check.
      * @throws addServiceException The criterion the class does not meet.
      */
-    public static void addService(Class<?> serviceToAdd) throws addServiceException {
-        int modifiers = serviceToAdd.getModifiers();
-        Class[] interfaces = serviceToAdd.getInterfaces();
+    public static void isOK(Class<?> service) throws addServiceException {
+        int modifiers = service.getModifiers();
+        Class[] interfaces = service.getInterfaces();
 
         if (!checksInterfaces(interfaces)) {
             throw new addServiceException("Class doesn't implements iService");
@@ -49,16 +88,15 @@ public class ServiceRegistry {
         if (Modifier.isAbstract(modifiers)) {
             throw new addServiceException("Class is abstract");
         }
-        if (!checksConstructor(serviceToAdd)) {
+        if (!checksConstructor(service)) {
             throw new addServiceException("Class has no conform constructor");
         }
-        if (!checksFields(serviceToAdd.getDeclaredFields())) {
+        if (!checksFields(service.getDeclaredFields())) {
             throw new addServiceException("Class has no Socket field");
         }
-        if (!checksPrintingMethod(serviceToAdd.getMethods())) {
+        if (!checksPrintingMethod(service.getMethods())) {
             throw new addServiceException("Class has no correct toString equivalent (\"printDescription\" method)");
         }
-        services.add(serviceToAdd);
     }
 
     /**
@@ -161,7 +199,7 @@ public class ServiceRegistry {
     }
 
     /* auto-generated */
-    private static class addServiceException extends Exception {
+    static class addServiceException extends Exception {
         public addServiceException(String message) {
             super(message);
         }

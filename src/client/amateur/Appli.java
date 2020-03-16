@@ -2,7 +2,6 @@ package client.amateur;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Connect with the server and communicate through this protocol :
@@ -31,16 +30,17 @@ public class Appli {
             /* LOGIN */
             System.out.println("Please, enter your credentials:");
             String login = inFromUser.readLine();
-            String password = inFromUser.readLine();
             outToServer.println(login);
             if (!dataFromServer.readBoolean()) exit("This User is either:\n* already connected\n* not in our database");
+            String password = inFromUser.readLine();
             outToServer.println(password);
             if (!dataFromServer.readBoolean()) exit("Incorrect password.");
 
             /* CHOOSING */
             System.out.println(inFromServer.readLine().replaceAll("`return`", "\n")); // printing all Services
             outToServer.println(inFromUser.readLine()); // sending chosen Service's index
-            if (!dataFromServer.readBoolean()) exit("Something went wrong.\n Their's two options:\neither the user is dumb\nor the server is dumb\n\nOption one is more likely...");
+            if (!dataFromServer.readBoolean())
+                exit("Something went wrong.\n Their's two options:\neither the user is dumb\nor the server is dumb\n\nOption one is more likely...");
 
             /* PROCESSING */
             System.out.println(inFromServer.readLine().replaceAll("`return`", "\n")); // printing instructions
@@ -55,7 +55,8 @@ public class Appli {
         }
     }
 
-    private static void exit(String reason) throws IOException {
+    // TODO: replace this with exception
+    private static void exit(String reason) {
         System.out.println(reason);
         System.exit(0);
     }

@@ -1,14 +1,17 @@
 package services;
 
-import java.io.*;
-import java.net.*;
-
 import server.BRi.iService;
 
-public class Inversion implements iService {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+public class Count implements iService {
     private final Socket socket;
 
-    public Inversion(Socket socket) {
+    public Count(Socket socket) {
         this.socket = socket;
     }
 
@@ -20,10 +23,10 @@ public class Inversion implements iService {
             PrintWriter outToUser = new PrintWriter(socket.getOutputStream(), true);
 
             /* sending instructions to the user */
-            outToUser.println(" Please, input text to reverse");
+            outToUser.println(" Please, input text to count");
 
             /* getting user's input and sending the processed data back */
-            outToUser.println(new String(new StringBuffer(inFromUser.readLine()).reverse()));
+            outToUser.println(inFromUser.readLine().length());
 
             /* closing, duh... */
             socket.close();
@@ -32,6 +35,6 @@ public class Inversion implements iService {
     }
 
     public static String printDescription() {
-        return "Reverses the given text";
+        return "Return the given text's size";
     }
 }
